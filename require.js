@@ -1,0 +1,48 @@
+"use strcit"
+
+let R = require("ramda")
+let file = require("../data/readFile.js").File
+const q = require("q")
+
+//lee el archivo de forma sincrona
+//console.log(file.readFileSync())
+/*file.readFile(function(err, data){
+	//console.log("-----------------------------1")
+	//console.log(context._name)
+	//console.log("-----------------------------2")
+	if (err) 
+		
+		console.log(err);
+		
+	//return data.toString("utf8")
+	console.log(data.toString("utf8"));
+	
+})
+*/
+let Users = function(){	
+}
+
+
+Users.prototype.getLadies = function(){
+	let deferred = q.defer()
+	
+	file.readFileP("./lib/MOCK_DATA.json").then(function(data){
+		let people = JSON.parse(data)
+		
+		//retorna todo el JSON completo 
+		//console.log(people.length);
+		
+		//se hace un filtro en el JSON para mostrar solo los valores "Female" 
+		//let ladies = R.find(R.propEq("gender", "Female"),people)
+		
+		let fn = r => r.gender === "Female";
+		let ladies = R.filter(fn,people)
+		deferred.resolve(ladies)
+		
+	},function(err){
+		deferred.reject("Error!!!")
+	});
+	return deferred.promise
+}
+
+module.exports.Users = new Users()
