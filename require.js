@@ -26,23 +26,19 @@ let Users = function(){
 Users.prototype.getLadies = function(){
 	let deferred = q.defer()
 	
-	file.readFileP("./lib/MOCK_DATA.json").then(function(data){
+	file.readFileP("./MOCK_DATA.json").then(function(data){
 		let people = JSON.parse(data)
 		
-		//retorna todo el JSON completo 
-		//console.log(people.length);
-		
 		//se hace un filtro en el JSON para mostrar solo los valores "Female" 
-		//let ladies = R.find(R.propEq("gender", "Female"),people)
-		
 		let fn = r => r.gender === "Female";
 		let ladies = R.filter(fn,people)
 		deferred.resolve(ladies)
 		
 	},function(err){
-		deferred.reject("Error!!!")
+		deferred.reject()
 	});
 	return deferred.promise
+	
 }
 
 module.exports.Users = new Users()
