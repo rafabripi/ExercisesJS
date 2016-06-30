@@ -41,4 +41,22 @@ Users.prototype.getLadies = function(){
 	
 }
 
+//method that return filter from Query string
+Users.prototype.getFilterQS = function(queryS){
+	let deferred = q.defer()
+	
+	file.readFileP("./MOCK_DATA.json").then(function(data){
+		let people = JSON.parse(data)
+		
+		let fn = r => r[queryS.key] === queryS.value;
+		let filt = R.filter(fn,people)
+		deferred.resolve(filt)
+		
+	},function(err){
+		deferred.reject()
+	});
+	return deferred.promise
+}
+
+
 module.exports.Users = new Users()
