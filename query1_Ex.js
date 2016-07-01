@@ -6,10 +6,11 @@ let app = express()
 
 app.get('/', function(req, res) {
 	let data = {
-		id: req.query.id,
-		first_name: req.query.f_name
+		key: req.query.key,
+		value: req.query.value
 	}
-	
+	//console debug test of data value 
+	console.log(data)
 	_users.getFilterQS(data).then(function(dataF){
 		res.status(200).send(dataF)
 	},function(err){
