@@ -9,8 +9,6 @@ app.get('/', function(req, res) {
 		key: req.query.key,
 		value: req.query.value
 	}
-	//console debug test of data value 
-	console.log(data)
 	_users.getFilterQS(data).then(function(dataF){
 		res.status(200).send(dataF)
 	},function(err){

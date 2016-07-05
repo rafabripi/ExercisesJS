@@ -45,15 +45,24 @@ Users.prototype.getLadies = function(){
 Users.prototype.getFilterQS = function(queryS){
 	let deferred = q.defer()
 	
-	file.readFileP("./MOCK_DATA.json").then(function(data){
+	file.readFileP("./lib/MOCK_DATA.json").then(function(data){
 		let people = JSON.parse(data)
+		let val = parseInt(queryS.value)
 		
-		let fn = r => r[queryS.key] === queryS.value;
+		if(!val){
+			val = queryS.value
+		}
+		
+		let fn = r => r[queryS.key] === val;
+		//next function is equal to previous lamda expression
+		// function fn (r){
+			// return r[queryS.key] === val;
+		// }
 		let filt = R.filter(fn,people)
 		deferred.resolve(filt)
 		
 	},function(err){
-		deferred.reject()
+		deferred.reject(err)
 	});
 	return deferred.promise
 }

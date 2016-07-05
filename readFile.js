@@ -22,7 +22,7 @@ File.prototype.readFileP = function(fileName){
 	
 	fs.readFile(fileName, "utf8",function(err, data){
 		if (err){
-			deferred.reject("Error, File no found")
+			deferred.reject("Error, File no found ->" + err)
 		}
 		deferred.resolve(data)
 	});
