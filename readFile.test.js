@@ -50,17 +50,18 @@ describe("Array", function(){
 				expect(error).to.not.exist;
 				done();
 			})
-			
 		})
 		
 		it("If 'id' is 11 first_name should be Matthew", function(done){
-			users.getFilterQS().then(function(person){
-				
-				expect(person.first_name).to.equal("Matthew")
-				
-			},function(err){
-				console.log(err)
-				});
+		let data = {
+			key: id,
+		      	value: 11};
+    
+		users.getFilterQS(data).then(function(person){
+		expect(person.first_name).to.equal("Matthew")
+		},function(err){
+			console.log(err)
+			});
 		});
 		
 	});
