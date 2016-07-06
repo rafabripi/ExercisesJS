@@ -16,7 +16,8 @@ File.prototype.readFileSync = function(name){
 }
 
 //read a file asyncronous with promises
-File.prototype.readFileP = function(fileName){
+File.readFileP = File.prototype.readFileP = function(fileName){
+	
 	let context = this;
 	let deferred = q.defer()
 	

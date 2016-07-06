@@ -1,7 +1,7 @@
 "use strcit"
 
 let R = require("ramda")
-let file = require("../data/readFile.js").File
+//let file = require("../data/readFile.js").File
 const q = require("q")
 
 //lee el archivo de forma sincrona
@@ -19,14 +19,15 @@ const q = require("q")
 	
 })
 */
-let Users = function(){	
+let Users = function(file){
+	this._file = file
 }
 
 
 Users.prototype.getLadies = function(){
 	let deferred = q.defer()
 	
-	file.readFileP("./MOCK_DATA.json").then(function(data){
+	this._file.readFileP("./MOCK_DATA.json").then(function(data){
 		let people = JSON.parse(data)
 		
 		//se hace un filtro en el JSON para mostrar solo los valores "Female" 
@@ -45,7 +46,7 @@ Users.prototype.getLadies = function(){
 Users.prototype.getFilterQS = function(queryS){
 	let deferred = q.defer()
 	
-	file.readFileP("./lib/MOCK_DATA.json").then(function(data){
+	this._file.readFileP("./lib/MOCK_DATA.json").then(function(data){
 		let people = JSON.parse(data)
 		let val = parseInt(queryS.value)
 		
@@ -68,4 +69,4 @@ Users.prototype.getFilterQS = function(queryS){
 }
 
 
-module.exports.Users = new Users()
+module.exports.Users = Users

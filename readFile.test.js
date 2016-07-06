@@ -2,7 +2,9 @@
 
 const assert = require("chai").assert;
 const expect = require("chai").expect;
-const users = require("../../lib/business/require.js").Users;
+const Users = require("../../lib/business/require.js").Users;
+const readFile = require("../../lib/data/readFile.js").File;
+const sinon = require("sinon");
 //test suite
 describe("Array", function(){
 	describe("#indexOf()",function(){
@@ -50,19 +52,89 @@ describe("Array", function(){
 				expect(error).to.not.exist;
 				done();
 			})
+			
 		})
 		
-		it("If 'id' is 11 first_name should be Matthew", function(done){
+		it.only("If 'id' is 11 first_name should be Matthew", function(done){
+		let users = new Users(readFile)
 		let data = {
-			key: id,
-		      	value: 11};
-    
+			key: "id",
+		    value: 11};
+		
 		users.getFilterQS(data).then(function(person){
-		expect(person.first_name).to.equal("Matthew")
+			let per = person[0]
+			expect(per.first_name).to.equal("Matthew")
+			done();
 		},function(err){
 			console.log(err)
+			done();
 			});
 		});
+
 		
+		it("Should be 480 records", function(done){
+			let arr = [ { id: 32,
+    first_name: 'Jason',
+    last_name: 'Kennedy',
+    email: 'jkennedyv@wikipedia.org',
+    gender: 'Male' },
+  { id: 124,
+    first_name: 'Jason',
+    last_name: 'Phillips',
+    email: 'jphillips3f@devhub.com',
+    gender: 'Male' },
+  { id: 369,
+    first_name: 'Jason',
+    last_name: 'James',
+    email: 'jjamesa8@mit.edu',
+    gender: 'Male' },
+  { id: 516,
+    first_name: 'Jason',
+    last_name: 'Clark',
+    email: 'jclarkeb@timesonline.co.uk',
+    gender: 'Male' },
+  { id: 588,
+    first_name: 'Jason',
+    last_name: 'King',
+    email: 'jkinggb@mayoclinic.com',
+    gender: 'Male' },
+  { id: 880,
+    first_name: 'Jason',
+    last_name: 'Hart',
+    email: 'jhartof@craigslist.org',
+    gender: 'Male' },
+  { id: 945,
+    first_name: 'Jason',
+    last_name: 'Jones',
+    email: 'jjonesq8@senate.gov',
+    gender: 'Male' } ];
+			let str = JSON.stringify(arr)
+			//let jasons = sinon.stub().returns();
+			readFile.readFileP = function(){
+				return {
+					then: function(cb, err){
+						cb(str)
+					}
+				}
+				
+			}
+			let users = new Users(readFile)
+			let data = {
+				key: "first_name",
+				value: "Jason"
+			};
+			
+			users.getFilterQS(data).then(function(ladies){
+				console.log(ladies.length)
+				console.log(ladies)
+				expect(ladies.length).to.equal(7)
+				done();
+			},function(err){
+				console.log(err)
+				done(err);
+			})
+			
+		});
+	
 	});
 });
