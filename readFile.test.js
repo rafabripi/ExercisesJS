@@ -2,9 +2,11 @@
 
 const assert = require("chai").assert;
 const expect = require("chai").expect;
+const people = require("../../lib/business/people.service.js").People
 const Users = require("../../lib/business/require.js").Users;
 const readFile = require("../../lib/data/readFile.js").File;
 const sinon = require("sinon");
+
 //test suite
 describe("Array", function(){
 	describe("#indexOf()",function(){
@@ -42,20 +44,21 @@ describe("Array", function(){
 		
 		
 		it(" Female should be 480", function(done){
+			let users = new Users(readFile)
+			
 			users.getLadies().then(function(arrLadies){
-				//muestra los datos filtrados
-				//console.log(arrLadies)
-				
 				expect(arrLadies.length).to.equal(480);
 				done();
 			}, function(error){
+				console.log(error)
 				expect(error).to.not.exist;
 				done();
 			})
 			
 		})
 		
-		it.only("If 'id' is 11 first_name should be Matthew", function(done){
+		it("If 'id' is 11 first_name should be Matthew", function(done){
+		//creating an object of Users---------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		let users = new Users(readFile)
 		let data = {
 			key: "id",
@@ -116,7 +119,7 @@ describe("Array", function(){
 						cb(str)
 					}
 				}
-				
+				f
 			}
 			let users = new Users(readFile)
 			let data = {
@@ -135,6 +138,33 @@ describe("Array", function(){
 			})
 			
 		});
+		
+		it("name should be Matthew", function(){
+			let stub = sinon.stub();
+			let obj = {
+				name:"Matthew",
+				last_Name:"Gomez",
+				age: "24"
+			}
+			
+			stub.withArgs("Matthew").returns(obj);
+			
+			assert.equal(stub("Matthew").name,"Matthew");
+			assert.equal(stub("Matthew").last_Name,"Gomez");
+			assert.equal(stub("Matthew").age,24);
+		})
+		
+		it.only("verify name", function(done){
+			people.getInfo().then(function(data){
+				console.log(data);
+				assert.equal(data.name,"Jhon")
+				done()
+			},function(error){
+				console.log(error)
+				done()
+			})
+			
+		})
 	
 	});
 });
