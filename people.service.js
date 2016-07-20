@@ -6,7 +6,7 @@ let People = function(db){
 	this._db = db;
 }
 
-People.prototype.getInfo = function(){
+People.prototype.getInfo = function(params){
 	let deferred = q.defer();
 	
 	// deferred.resolve({
@@ -14,9 +14,9 @@ People.prototype.getInfo = function(){
 		// lastName: "Har",
 		// age: 45
 	// })
+	return this._db.getPeopleInfo(params)
 	
-	
-	return deferred.promise;
+	//return deferred.promise;
 }
 
 module.exports.People = People;

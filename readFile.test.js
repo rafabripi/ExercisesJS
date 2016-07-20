@@ -1,11 +1,13 @@
 "use strict"
 
 const assert = require("chai").assert;
+const db = require("../../lib/data/dataBase.js").DB
 const expect = require("chai").expect;
-const people = require("../../lib/business/people.service.js").People
+const People = require("../../lib/business/people.service.js").People
 const Users = require("../../lib/business/require.js").Users;
 const readFile = require("../../lib/data/readFile.js").File;
 const sinon = require("sinon");
+require("sinon-as-promised");
 
 //test suite
 describe("Array", function(){
@@ -155,9 +157,27 @@ describe("Array", function(){
 		})
 		
 		it.only("verify name", function(done){
-			people.getInfo().then(function(data){
+			let stub = sinon.stub();
+			let objN = {
+				name: "Jhon",
+				lastName: "Har",
+				age: 45
+				}
+			let objM = {
+				name: "Sara",
+				lastName: "Conor",
+				age: 37
+			}
+			
+			stub.withArgs("Male").resolves(objN);
+			stub.withArgs("Female").resolves(objM);
+			
+			db.getPeopleInfo = stub;
+			let people = new People(db);
+			
+			people.getInfo("Female").then(function(data){
 				console.log(data);
-				assert.equal(data.name,"Jhon")
+				assert.equal(data.name,"Sara")
 				done()
 			},function(error){
 				console.log(error)
