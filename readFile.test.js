@@ -156,7 +156,7 @@ describe("Array", function(){
 			assert.equal(stub("Matthew").age,24);
 		})
 		
-		it.only("verify name", function(done){
+		it("verify name", function(done){
 			let stub = sinon.stub();
 			let objN = {
 				name: "Jhon",
@@ -176,7 +176,6 @@ describe("Array", function(){
 			let people = new People(db);
 			
 			people.getInfo("Female").then(function(data){
-				console.log(data);
 				assert.equal(data.name,"Sara")
 				done()
 			},function(error){
@@ -186,5 +185,89 @@ describe("Array", function(){
 			
 		})
 	
+		it("Some", function(done){
+			let stub = sinon.stub();
+			
+			let obj1 = {
+				name: "Pedro",
+				lastName: "Picapiedra",
+				age: 2
+			}
+			
+			stub.withArgs(42).resolves(obj1)
+			
+			db.getPeopleInfo = stub;
+			let people = new People(db);
+			
+			people.getInfo(42).then(function(data){
+				console.log(data.name)
+				// expect(true).to.be.false;
+				assert(data.name === "Pedro")
+				// assert.equal(data.lastName, "Picapiedra")
+				done()
+			},function(error){
+				console.log(error)
+				done()
+			})	
+		})
+		
+		it.only("Some2", function(done){
+			let stub = sinon.stub();
+			stub.withArgs("Hola").resolves("Mundo")
+			
+			db.getPeopleInfo = stub;
+			let people = new People(db);
+			
+			people.getInfo("Hola").then(function(data){
+				console.log(data)
+				assert(data === "Mundoo")
+				console.log("------>")
+				done()
+			},function(error){
+				console.log(error)
+				done()
+			})
+		})
+		
+		it.only("Some3", function(done){
+			let stub = sinon.stub();
+			
+			stub.withArgs("Hola").resolves(throw new Error("Not found"))
+			
+			db.getPeopleInfo = stub;
+			let people = new People(db);
+			
+			people.getInfo("Hola").then(function(data){
+				console.log(data)
+				assert(data === "Mundoo")
+				console.log("------>")
+				done()
+			},function(error){
+				console.log(error)
+				done()
+			})
+		})
+		
+		it.only("Some4", function(done){
+			let stub = sinon.stub();
+			
+			stub.withArgs("Hola").resolves(throw new Error("Not found"))
+			
+			db.getPeopleInfo = stub;
+			let people = new People(db);
+			
+			people.getInfo("Hola").then(function(data){
+				console.log(data)
+				assert(data.length === 3)
+				assert(data[0].name === "Pablo")
+				assert(data[0].lastName === "Marmol")
+				console.log("------>")
+				done()
+			},function(error){
+				console.log(error)
+				done()
+			})
+		})
+		
 	});
 });
