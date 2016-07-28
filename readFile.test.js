@@ -211,7 +211,7 @@ describe("Array", function(){
 			})	
 		})
 		
-		it.only("Some2", function(done){
+		it("Some2", function(done){
 			let stub = sinon.stub();
 			stub.withArgs("Hola").resolves("Mundo")
 			
@@ -229,7 +229,7 @@ describe("Array", function(){
 			})
 		})
 		
-		it.only("Some3", function(done){
+		it("Some3", function(done){
 			let stub = sinon.stub();
 			
 			stub.withArgs("Hola").resolves(throw new Error("Not found"))
@@ -248,10 +248,14 @@ describe("Array", function(){
 			})
 		})
 		
-		it.only("Some4", function(done){
+	it.only("Some4", function(done){
 			let stub = sinon.stub();
 			
-			stub.withArgs("Hola").resolves(throw new Error("Not found"))
+      			let arr = [{name: "pablo", lastName: "Marmol"},
+      			{name: "bambam"},
+      			{name:"Pedro"}]
+      
+			stub.withArgs("Hola").resolves(arr)
 			
 			db.getPeopleInfo = stub;
 			let people = new People(db);
@@ -261,7 +265,6 @@ describe("Array", function(){
 				assert(data.length === 3)
 				assert(data[0].name === "Pablo")
 				assert(data[0].lastName === "Marmol")
-				console.log("------>")
 				done()
 			},function(error){
 				console.log(error)
