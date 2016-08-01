@@ -1,12 +1,14 @@
-"use strcit"
+"use strict"
 
-let R = require("ramda")
-//let file = require("../data/readFile.js").File
 const q = require("q")
+let R = require("ramda")
+/*remove the dependence of readFile to inject it on constructor class Users"
+let file = require("../data/readFile.js").File*/
 
-//lee el archivo de forma sincrona
-//console.log(file.readFileSync())
-/*file.readFile(function(err, data){
+
+/*read a file of asynchronous way 
+console.log(file.readFileSync())
+file.readFile(function(err, data){
 	//console.log("-----------------------------1")
 	//console.log(context._name)
 	//console.log("-----------------------------2")
@@ -16,27 +18,25 @@ const q = require("q")
 		
 	//return data.toString("utf8")
 	console.log(data.toString("utf8"));
-	
-})
-*/
+})*/
+
 let Users = function(file){
 	this._file = file
 }
 
-
 Users.prototype.getLadies = function(){
 	let deferred = q.defer()
 	
-	this._file.readFileP("./MOCK_DATA.json").then(function(data){
+	this._file.readFileP("./lib/MOCK_DATA.json").then(function(data){
 		let people = JSON.parse(data)
 		
-		//se hace un filtro en el JSON para mostrar solo los valores "Female" 
+		//filter on JSON file to catch only values of gender equal to "Female" 
 		let fn = r => r.gender === "Female";
 		let ladies = R.filter(fn,people)
 		deferred.resolve(ladies)
 		
 	},function(err){
-		deferred.reject()
+		deferred.reject(err)
 	});
 	return deferred.promise
 	

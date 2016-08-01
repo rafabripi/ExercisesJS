@@ -232,7 +232,7 @@ describe("Array", function(){
 		it("Some3", function(done){
 			let stub = sinon.stub();
 			
-			stub.withArgs("Hola").resolves(throw new Error("Not found"))
+			// stub.withArgs("Hola").resolves(throw new Error("Not found"))
 			
 			db.getPeopleInfo = stub;
 			let people = new People(db);
@@ -248,10 +248,10 @@ describe("Array", function(){
 			})
 		})
 		
-	it.only("Some4", function(done){
+		it.only("Some4", function(done){
 			let stub = sinon.stub();
 			
-      			let arr = [{name: "pablo", lastName: "Marmol"},
+      		let arr = [{name: "Pablo", lastName: "Marmol"},
       			{name: "bambam"},
       			{name:"Pedro"}]
       
@@ -261,7 +261,6 @@ describe("Array", function(){
 			let people = new People(db);
 			
 			people.getInfo("Hola").then(function(data){
-				console.log(data)
 				assert(data.length === 3)
 				assert(data[0].name === "Pablo")
 				assert(data[0].lastName === "Marmol")

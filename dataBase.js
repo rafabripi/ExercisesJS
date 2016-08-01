@@ -5,7 +5,7 @@ let DB = function(){
 }
 
 DB.prototype.getPeopleInfo = function(params){
-	return "Juan"
+//	return "Juan"
 }
 
 module.exports.DB = new DB()

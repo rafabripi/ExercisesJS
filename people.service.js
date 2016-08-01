@@ -8,7 +8,6 @@ let People = function(db){
 
 People.prototype.getInfo = function(params){
 	let deferred = q.defer();
-	
 	// deferred.resolve({
 		// name: "Jhon",
 		// lastName: "Har",
