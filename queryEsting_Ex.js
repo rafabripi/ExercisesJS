@@ -1,7 +1,7 @@
 "use strict"
 
 const express = require("express")
-const _users = require("../business/require.js").Users
+const _users = require("../business/users.service.js").Users
 let app = express()
 
 app.get('/', function(req, res) {

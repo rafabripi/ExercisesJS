@@ -1,7 +1,7 @@
 "use stric"
 
 const express = require('express')
-let Users = require("../business/require.js").Users
+let Users = require("../business/users.service.js").Users
 const readFile = require("../data/readFile.js").File;
 let app = express()
 

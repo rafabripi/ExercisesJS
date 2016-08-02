@@ -5,7 +5,7 @@ const db = require("../../lib/data/dataBase.js").DB
 const ElasticClient = require("../../lib/data/elascticClient.js").ElasticClient
 const expect = require("chai").expect;
 const People = require("../../lib/business/people.service.js").People
-const Users = require("../../lib/business/require.js").Users;
+const Users = require("../../lib/business/users.service.js").Users;
 const readFile = require("../../lib/data/readFile.js").File;
 const sinon = require("sinon");
 require("sinon-as-promised");
